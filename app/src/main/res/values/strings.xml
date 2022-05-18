@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Sn1p3RsGame</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="name">Name</string>
+    <string name="hp">Health points</string>
+    <string name="ap">Attack points</string>
+    <string name="fraction">Fraction</string>
+</resources>
