@@ -1,5 +1,6 @@
 package com.example.sn1p3rsgame.cardStuff;
 
+import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -10,7 +11,7 @@ import java.io.Serializable;
 public class BasicCard implements Parcelable, Serializable {
     protected String name,fraction,imageName;
     protected int healthPoints ,attackPoints ;
-
+    Bitmap bitmap;
 
     public  BasicCard(String name, String fraction, int ap , int hp,String image){
         this.name = name;
@@ -50,6 +51,13 @@ public class BasicCard implements Parcelable, Serializable {
         return imageName;
     }
 
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
+
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
+    }
 
     @Override
     public int describeContents() {
@@ -83,7 +91,9 @@ public class BasicCard implements Parcelable, Serializable {
         }
     };
 
-
+    public void damage(int ap){
+        healthPoints -= ap;
+    }
 
 
     @NonNull

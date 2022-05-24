@@ -11,23 +11,27 @@ import com.example.sn1p3rsgame.cardStuff.BasicCard;
 public class CardView extends RelativeLayout {
     private BasicCard basicCard;
     private int listPosition;
-    ImageView cardView;
+
 
     public CardView(Context context) {
         this(context, null);
     }
+
     public CardView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
+
     public CardView(Context context, AttributeSet attrs, int defStyleAttr) {
         this(context, attrs, defStyleAttr, 0);
     }
-    public CardView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes){
+
+    public CardView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        inflate(getContext(), R.layout.cardview,this);
+        inflate(getContext(), R.layout.cardview, this);
 
     }
-    public void setBasicCard(BasicCard newBasicCard){
+
+    public void setBasicCard(BasicCard newBasicCard) {
         basicCard = newBasicCard;
     }
 

@@ -7,6 +7,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.DragEvent;
@@ -18,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 
+import com.example.sn1p3rsgame.CardsForDeck;
 import com.example.sn1p3rsgame.R;
 import com.example.sn1p3rsgame.cardStuff.BasicCard;
 import com.example.sn1p3rsgame.cardStuff.CardView;
@@ -31,11 +35,10 @@ public class ChoseOfDeckActivity extends AppCompatActivity {
     protected RecyclerView allCardsRv, userCardsRv;
 
 
-    protected CustomRecyclerViewAdapter allCardsAdapter,userCardsAdapter;
+    protected CustomRecyclerViewAdapter allCardsAdapter, userCardsAdapter;
     List<BasicCard> userCardsList, allCardsList;
     Button battleButton;
-    public static final int USER_MAX_CARDS = 8;
-
+    public static final int USER_MAX_CARDS = 4;
 
 
     @Override
@@ -104,7 +107,7 @@ public class ChoseOfDeckActivity extends AppCompatActivity {
         battleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (userCardsList.size()< 8){
+                if (userCardsList.size() < USER_MAX_CARDS) {
                     Toast.makeText(getApplicationContext(), "Выберите 8 карт", Toast.LENGTH_SHORT).show();
                 } else {
                     Intent intent = new Intent(ChoseOfDeckActivity.this, BattleFieldActivity.class);
@@ -119,26 +122,23 @@ public class ChoseOfDeckActivity extends AppCompatActivity {
 
 
     private List<BasicCard> getListDataFromDeck() {
+        CardsForDeck cards = new CardsForDeck();
         allCardsList = new ArrayList<BasicCard>();
-        BasicCard legioner = new BasicCard("Legioner", "light", 1, 2, "card");
-        BasicCard evil = new BasicCard("Evil", "dark", 3, 4, "card");
-        BasicCard evil1 = new BasicCard("Netrual", "no", 5, 6, "card");
-        BasicCard evil2 = new BasicCard("Evil", "dark", 7, 8, "card");
-        BasicCard evil3 = new BasicCard("Evil", "dark", 9, 10, "card");
-        BasicCard evil4 = new BasicCard("Evil", "dark", 13, 14, "card");
-        BasicCard evil5 = new BasicCard("Evil", "dark", 15, 16, "card");
-        BasicCard evil6 = new BasicCard("Evil", "dark", 11, 12, "card");
-        BasicCard evil7 = new BasicCard("Evil", "dark", 6, 10, "card");
+        allCardsList = cards.returnCards();
 
-        allCardsList.add(legioner);
-        allCardsList.add(evil);
-        allCardsList.add(evil1);
-        allCardsList.add(evil2);
-        allCardsList.add(evil3);
-        allCardsList.add(evil4);
-        allCardsList.add(evil5);
-        allCardsList.add(evil6);
-        allCardsList.add(evil7);
+//        Bitmap b = BitmapFactory.decodeResource(getResources(),R.drawable.sprites);
+//        int w = b.getWidth()/4;
+//        int h = b.getHeight()/4;
+//
+//        evil.setBitmap(Bitmap.createBitmap(b, 0,0, w,h));
+//        evil1.setBitmap(Bitmap.createBitmap(b, 0,0, w,h));
+//        evil2.setBitmap(Bitmap.createBitmap(b, 0,0, w,h));
+//        evil3.setBitmap(Bitmap.createBitmap(b, 0,0, w,h));
+//        legioner.setBitmap(Bitmap.createBitmap(b, 0,0, w,h));
+//        evil4.setBitmap(Bitmap.createBitmap(b, 0,0, w,h));
+//        evil5.setBitmap(Bitmap.createBitmap(b, 0,0, w,h));
+//        evil6.setBitmap(Bitmap.createBitmap(b, 0,0, w,h));
+//        evil7.setBitmap(Bitmap.createBitmap(b, 0,0, w,h));
 
         return allCardsList;
     }
@@ -154,9 +154,9 @@ public class ChoseOfDeckActivity extends AppCompatActivity {
         List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
 
         int size = fragmentList.size();
-        if (size > 0){
+        if (size > 0) {
 
-            getSupportFragmentManager().beginTransaction().remove(fragmentList.get(size-1))
+            getSupportFragmentManager().beginTransaction().remove(fragmentList.get(size - 1))
                     .commit();
 
         } else {
@@ -165,12 +165,15 @@ public class ChoseOfDeckActivity extends AppCompatActivity {
 
 
     }
-    public List<BasicCard> getUserCardsList(){
+
+    public List<BasicCard> getUserCardsList() {
         return userCardsList;
     }
-    public List<BasicCard> getAllCardsList(){
+
+    public List<BasicCard> getAllCardsList() {
         return allCardsList;
     }
+
     public CustomRecyclerViewAdapter getAllCardsAdapter() {
         return allCardsAdapter;
     }
