@@ -6,4 +6,7 @@
     <string name="hp">Health points</string>
     <string name="ap">Attack points</string>
     <string name="fraction">Fraction</string>
+    <string name="game_over">Game over</string>
+    <string name="you_win">You win</string>
+    <string name="back_to_menu">Back to menu</string>
 </resources>
