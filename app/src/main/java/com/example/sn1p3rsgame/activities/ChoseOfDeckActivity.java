@@ -2,6 +2,8 @@ package com.example.sn1p3rsgame.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,6 +27,8 @@ import com.example.sn1p3rsgame.CardsForDeck;
 import com.example.sn1p3rsgame.R;
 import com.example.sn1p3rsgame.cardStuff.BasicCard;
 import com.example.sn1p3rsgame.cardStuff.CardView;
+import com.example.sn1p3rsgame.fragment.DefeatFragment;
+import com.example.sn1p3rsgame.fragment.GameOverFragment;
 import com.example.sn1p3rsgame.recyclerStuff.CustomRecyclerViewAdapter;
 
 import java.util.ArrayList;
@@ -33,7 +37,7 @@ import java.util.List;
 public class ChoseOfDeckActivity extends AppCompatActivity {
     public static final String LOG_TAG = "AndroidExample";
     protected RecyclerView allCardsRv, userCardsRv;
-
+    public final static String TO_WIN_FRAGMENT = "win";
 
     protected CustomRecyclerViewAdapter allCardsAdapter, userCardsAdapter;
     List<BasicCard> userCardsList, allCardsList;
@@ -55,7 +59,6 @@ public class ChoseOfDeckActivity extends AppCompatActivity {
         this.allCardsRv = (RecyclerView) this.findViewById(R.id.recyclerViewFromDeck);
         allCardsAdapter = new CustomRecyclerViewAdapter(this, cards);
         allCardsRv.setAdapter(allCardsAdapter);
-        // RecyclerView scroll vertical
         LinearLayoutManager linearLayoutManagerFromDeck = new LinearLayoutManager
                 (this, LinearLayoutManager.HORIZONTAL, false);
         allCardsRv.setLayoutManager(linearLayoutManagerFromDeck);
@@ -114,7 +117,7 @@ public class ChoseOfDeckActivity extends AppCompatActivity {
                     Bundle bundle = new Bundle();
                     bundle.putParcelableArrayList("deckList", (ArrayList<? extends Parcelable>) userCardsList);
                     intent.putExtras(bundle);
-                    startActivity(intent);
+                    startActivityForResult(intent, BattleFieldActivity.YOU_WIN);
                 }
             }
         });
@@ -126,19 +129,6 @@ public class ChoseOfDeckActivity extends AppCompatActivity {
         allCardsList = new ArrayList<BasicCard>();
         allCardsList = cards.returnCards();
 
-//        Bitmap b = BitmapFactory.decodeResource(getResources(),R.drawable.sprites);
-//        int w = b.getWidth()/4;
-//        int h = b.getHeight()/4;
-//
-//        evil.setBitmap(Bitmap.createBitmap(b, 0,0, w,h));
-//        evil1.setBitmap(Bitmap.createBitmap(b, 0,0, w,h));
-//        evil2.setBitmap(Bitmap.createBitmap(b, 0,0, w,h));
-//        evil3.setBitmap(Bitmap.createBitmap(b, 0,0, w,h));
-//        legioner.setBitmap(Bitmap.createBitmap(b, 0,0, w,h));
-//        evil4.setBitmap(Bitmap.createBitmap(b, 0,0, w,h));
-//        evil5.setBitmap(Bitmap.createBitmap(b, 0,0, w,h));
-//        evil6.setBitmap(Bitmap.createBitmap(b, 0,0, w,h));
-//        evil7.setBitmap(Bitmap.createBitmap(b, 0,0, w,h));
 
         return allCardsList;
     }
@@ -165,6 +155,25 @@ public class ChoseOfDeckActivity extends AppCompatActivity {
 
 
     }
+
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == BattleFieldActivity.YOU_WIN && resultCode == RESULT_OK) {
+            Fragment fragment = new GameOverFragment();
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.add(R.id.fl_chose, fragment);
+            ft.commit();
+        } else if (requestCode == BattleFieldActivity.YOU_WIN && resultCode == RESULT_CANCELED){
+            Fragment fragment = new DefeatFragment();
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.add(R.id.fl_chose, fragment);
+            ft.commit();
+        }
+        }
+
 
     public List<BasicCard> getUserCardsList() {
         return userCardsList;

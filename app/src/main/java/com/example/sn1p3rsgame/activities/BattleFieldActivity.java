@@ -1,6 +1,7 @@
 package com.example.sn1p3rsgame.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.DragEvent;
@@ -12,6 +13,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,12 +40,15 @@ import java.util.TimerTask;
 public class BattleFieldActivity extends AppCompatActivity {
 
     public static final String LOG_TAG = "AndroidExample";
+
     private RecyclerView recyclerView;
     private Queue<BasicCard> cardsQueue;
     private TextView myCharTv, enemyCharTv;
     private MainCharacter myChar, enemyChar;
-    private Context context1;
-    List<BasicCard> enemyDeckList;
+    public static final int YOU_WIN = 1;
+
+
+
 
 
     @Override
@@ -57,9 +64,6 @@ public class BattleFieldActivity extends AppCompatActivity {
         enemyChar = new MainCharacter(30);
         myCharTv.setText(myChar.getHp() + "");
         enemyCharTv.setText(enemyChar.getHp() + "");
-
-
-
 
 
         cardsQueue = new LinkedList<BasicCard>();
@@ -94,37 +98,62 @@ public class BattleFieldActivity extends AppCompatActivity {
                     case DragEvent.ACTION_DROP:
 
                         CardView vw = (CardView) event.getLocalState();
+
                         ViewGroup owner = (ViewGroup) vw.getParent();
                         owner.removeView(vw);
                         LinearLayout container = (LinearLayout) v;
-                        container.addView(vw);
-//                        v.setBackground(new BitmapDrawable(Bitmap.createBitmap(vw.getBasicCard().getBitmap(), 0,0,42,42)));
                         cardsQueue.offer(vw.getBasicCard());
                         cards.remove(vw.getListPosition());
-                        cards.add(cardsQueue.poll());
+                        container.addView(vw);
+                        BasicCard n = cardsQueue.poll();
+                        BasicCard n2 = new BasicCard(n.getName(),n.getFraction(),n.getAttackPoints(),
+                                n.getHealthPoints(),n.getImage());
+                        cards.add(n2);
                         vw.setVisibility(View.VISIBLE);
-                        for (int i = 0; i < 4; i++) {
-                            checkLine(i);
-
-                        }
-                        ;
-
-                        enemyCharTv.setText(enemyChar.getHp() + "");
-                        myCharTv.setText(myChar.getHp() + "");
-
-
-                        System.out.println("si");
-
 
                         recyclerView.getAdapter().notifyDataSetChanged();
+
+
+                        for (int i = 0; i < 4; i++) {
+                            checkLine(i);
+                        };
+
+                        try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
                         setEnemyCard();
+
+
+
+
+                        for (int i = 0; i < 4; i++) {
+                            checkLineFromEnemy(i);
+                        };
+
+                        enemyCharTv.setText(enemyChar.getHp() + "");
+
+                        myCharTv.setText(myChar.getHp() + "");
+
+                        if (enemyChar.isDead()){
+                            Intent i = getIntent();
+                            setResult(RESULT_OK,i);
+                            finish();
+                        } else if (myChar.isDead()){
+                            Intent i = getIntent();
+                            setResult(RESULT_CANCELED,i);
+                            finish();
+                        }
+
                         return true;
 
                     case DragEvent.ACTION_DRAG_ENDED:
                         v.setBackgroundResource(R.drawable.customborder);
 
 
-                      return true;
+                        return true;
 
 
                 }
@@ -134,16 +163,17 @@ public class BattleFieldActivity extends AppCompatActivity {
         };
 
 
-
         RelativeLayout layout = findViewById(R.id.main_layout);
         View v = null;
-        for (int i = 0; i < 12; i++) {
+        for (int i = 23; i >= 0; i--) {  //чтобы клетки шли справа сверзу, а не снизу слева
             v = layout.getChildAt(i);
             if (v instanceof LinearLayout) { //  && v.getId() !== R.id. если появится новый layout, которому не нужен drag
                 v.setOnDragListener(dragListener);
+                TextView child = new TextView(this);
+                child.setText(i+"");
+                ((LinearLayout) v).addView(child);
             }
         }
-
 
 
     }
@@ -186,7 +216,35 @@ public class BattleFieldActivity extends AppCompatActivity {
 
     }
 
+    private void checkLineFromEnemy(int line) {
+        RelativeLayout layout = findViewById(R.id.main_layout);
+        for (int i = 14 + line * 3; i >= 12 + line * 3; i--) {
+            LinearLayout enemy = (LinearLayout) layout.getChildAt(i);
+            CardView enemyCardView = (CardView) enemy.getChildAt(0);
+            if (null == enemyCardView) continue;
+            for (int j = 2; j >= 0 ; j--) {
+                LinearLayout user = (LinearLayout) layout.getChildAt( line * 3 + j);
+                CardView userCardView = (CardView) user.getChildAt(0);
+
+                if (userCardView != null && enemyCardView != null) {
+                    userCardView.getBasicCard().damage(enemyCardView.getBasicCard().getAttackPoints());
+                    break;
+                } else if (enemyCardView != null && userCardView == null && j == 0) {
+                    myChar.damage(enemyCardView.getBasicCard().getAttackPoints());
+                    break;
+                }
+
+
+            }
+
+
+        }
+
+    }
+
     private void setEnemyCard() {
+
+
 
         List<BasicCard> enemyDeckList = new ArrayList<>();
         List<BasicCard> allCards = new ArrayList<>(CardsForDeck.returnCards());
@@ -199,17 +257,27 @@ public class BattleFieldActivity extends AppCompatActivity {
         LinearLayout enemy = (LinearLayout) layout.getChildAt(12 + randomLine * 3 + randomLayout);
         CardView cardView = new CardView(this);
         cardView.setBasicCard(enemyDeckList.get(0));
-        if (enemy.getChildCount() > 0){
+        if (enemy.getChildCount() > 0) {
             setEnemyCard();
             return;
         }
         enemy.addView(cardView);
 
 
+    }
+    @Override
+    public void onBackPressed() {
+        List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
 
+        int size = fragmentList.size();
+        if (size > 0) {
 
+            getSupportFragmentManager().beginTransaction().remove(fragmentList.get(size - 1))
+                    .commit();
 
-
+        } else {
+            finish();
+        }
 
 
     }

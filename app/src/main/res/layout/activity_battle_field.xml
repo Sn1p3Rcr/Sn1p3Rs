@@ -11,90 +11,11 @@
 
 
     <LinearLayout
-        android:id="@+id/lo12"
+        android:id="@+id/lo1"
         android:layout_width="60dp"
         android:layout_height="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="130dp"
-        android:layout_marginTop="220dp"
-        android:background="@drawable/customborder"
-
-        android:orientation="horizontal">
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/lo9"
-        android:layout_width="60dp"
-        android:layout_height="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="135dp"
-        android:layout_marginTop="180dp"
-        android:background="@drawable/customborder"
-
-        android:orientation="horizontal">
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/lo6"
-        android:layout_width="60dp"
-        android:layout_height="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="140dp"
-        android:layout_marginTop="140dp"
-        android:background="@drawable/customborder"
-
-        android:orientation="horizontal">
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/lo3"
-        android:layout_width="60dp"
-        android:layout_height="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="145dp"
+        android:layout_marginLeft="265dp"
         android:layout_marginTop="100dp"
-        android:background="@drawable/customborder"
-
-        android:orientation="horizontal">
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/lo11"
-        android:layout_width="60dp"
-        android:layout_height="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="190dp"
-        android:layout_marginTop="220dp"
-        android:background="@drawable/customborder"
-
-        android:orientation="horizontal">
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/lo8"
-        android:layout_width="60dp"
-        android:layout_height="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="195dp"
-        android:layout_marginTop="180dp"
-        android:background="@drawable/customborder"
-
-        android:orientation="horizontal">
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/lo5"
-        android:layout_width="60dp"
-        android:layout_height="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="200dp"
-        android:layout_marginTop="140dp"
         android:background="@drawable/customborder"
 
         android:orientation="horizontal">
@@ -115,25 +36,12 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/lo10"
+        android:id="@+id/lo3"
         android:layout_width="60dp"
         android:layout_height="40dp"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="250dp"
-        android:layout_marginTop="220dp"
-        android:background="@drawable/customborder"
-
-        android:orientation="horizontal">
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/lo7"
-        android:layout_width="60dp"
-        android:layout_height="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="255dp"
-        android:layout_marginTop="180dp"
+        android:layout_marginLeft="145dp"
+        android:layout_marginTop="100dp"
         android:background="@drawable/customborder"
 
         android:orientation="horizontal">
@@ -154,12 +62,12 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/lo1"
+        android:id="@+id/lo5"
         android:layout_width="60dp"
         android:layout_height="40dp"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="265dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginLeft="200dp"
+        android:layout_marginTop="140dp"
         android:background="@drawable/customborder"
 
         android:orientation="horizontal">
@@ -167,13 +75,12 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/lo22"
+        android:id="@+id/lo6"
         android:layout_width="60dp"
         android:layout_height="40dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="220dp"
-        android:layout_marginRight="255dp"
+        android:layout_marginLeft="140dp"
+        android:layout_marginTop="140dp"
         android:background="@drawable/customborder"
 
         android:orientation="horizontal">
@@ -181,13 +88,119 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/lo19"
+        android:id="@+id/lo7"
         android:layout_width="60dp"
         android:layout_height="40dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
+        android:layout_marginLeft="255dp"
         android:layout_marginTop="180dp"
-        android:layout_marginRight="130dp"
+        android:background="@drawable/customborder"
+
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lo8"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="195dp"
+        android:layout_marginTop="180dp"
+        android:background="@drawable/customborder"
+
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lo9"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="135dp"
+        android:layout_marginTop="180dp"
+        android:background="@drawable/customborder"
+
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lo10"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="250dp"
+        android:layout_marginTop="220dp"
+        android:background="@drawable/customborder"
+
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lo11"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="190dp"
+        android:layout_marginTop="220dp"
+        android:background="@drawable/customborder"
+
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lo12"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="130dp"
+        android:layout_marginTop="220dp"
+        android:background="@drawable/customborder"
+
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lo13"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="100dp"
+        android:layout_marginRight="240dp"
+        android:background="@drawable/customborder"
+
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lo14"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="100dp"
+        android:layout_marginRight="180dp"
+        android:background="@drawable/customborder"
+
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lo15"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="100dp"
+        android:layout_marginRight="120dp"
         android:background="@drawable/customborder"
 
         android:orientation="horizontal">
@@ -209,48 +222,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/lo13"
-        android:layout_width="60dp"
-        android:layout_height="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="240dp"
-        android:layout_marginTop="100dp"
-        android:background="@drawable/customborder"
-
-        android:orientation="horizontal">
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/lo23"
-        android:layout_width="60dp"
-        android:layout_height="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="220dp"
-        android:layout_marginRight="195dp"
-        android:background="@drawable/customborder"
-
-        android:orientation="horizontal">
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/lo20"
-        android:layout_width="60dp"
-        android:layout_height="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="180dp"
-        android:layout_marginRight="190dp"
-        android:background="@drawable/customborder"
-
-        android:orientation="horizontal">
-
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/lo17"
         android:layout_width="60dp"
         android:layout_height="40dp"
@@ -258,48 +229,6 @@
         android:layout_alignParentRight="true"
         android:layout_marginTop="140dp"
         android:layout_marginRight="185dp"
-        android:background="@drawable/customborder"
-
-        android:orientation="horizontal">
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/lo14"
-        android:layout_width="60dp"
-        android:layout_height="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="180dp"
-        android:layout_marginTop="100dp"
-        android:background="@drawable/customborder"
-
-        android:orientation="horizontal">
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/lo24"
-        android:layout_width="60dp"
-        android:layout_height="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="220dp"
-        android:layout_marginRight="135dp"
-        android:background="@drawable/customborder"
-
-        android:orientation="horizontal">
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/lo21"
-        android:layout_width="60dp"
-        android:layout_height="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="180dp"
-        android:layout_marginRight="250dp"
         android:background="@drawable/customborder"
 
         android:orientation="horizontal">
@@ -321,13 +250,83 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/lo15"
+        android:id="@+id/lo19"
         android:layout_width="60dp"
         android:layout_height="40dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="120dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="180dp"
+        android:layout_marginRight="250dp"
+        android:background="@drawable/customborder"
+
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lo20"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="180dp"
+        android:layout_marginRight="190dp"
+        android:background="@drawable/customborder"
+
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lo21"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="180dp"
+        android:layout_marginRight="130dp"
+        android:background="@drawable/customborder"
+
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lo22"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="220dp"
+        android:layout_marginRight="255dp"
+        android:background="@drawable/customborder"
+
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lo23"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="220dp"
+        android:layout_marginRight="195dp"
+        android:background="@drawable/customborder"
+
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lo24"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="220dp"
+        android:layout_marginRight="135dp"
         android:background="@drawable/customborder"
 
         android:orientation="horizontal">

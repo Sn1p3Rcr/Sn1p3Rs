@@ -19,7 +19,7 @@
         android:layout_marginRight="80dp"
         android:layout_marginTop="60dp"
         android:layout_marginBottom="60dp"
-        android:background="@drawable/victory"/>
+        android:background="@drawable/defeat"/>
 
 
 

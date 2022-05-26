@@ -82,13 +82,23 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CardViewHold
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
+
             public void onClick(View view) {
-                CardInformationFragment cardInformationFragment = new CardInformationFragment();
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(KEY_TO_FRAGMENT, card);
-                cardInformationFragment.setArguments(bundle);
-                ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction()
-                        .add(R.id.fl_chose, cardInformationFragment).commit();
+                if (context instanceof ChoseOfDeckActivity) {
+                    CardInformationFragment cardInformationFragment = new CardInformationFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(KEY_TO_FRAGMENT, card);
+                    cardInformationFragment.setArguments(bundle);
+                    ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction()
+                            .add(R.id.fl_chose, cardInformationFragment).commit();
+                } else if (context instanceof BattleFieldActivity){
+                    CardInformationFragment cardInformationFragment = new CardInformationFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(KEY_TO_FRAGMENT, card);
+                    cardInformationFragment.setArguments(bundle);
+                    ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction()
+                            .add(R.id.main_layout, cardInformationFragment).commit();
+                }
             }
         });
 
