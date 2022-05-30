@@ -40,9 +40,11 @@ public class ChoseOfDeckActivity extends AppCompatActivity {
     public final static String TO_WIN_FRAGMENT = "win";
 
     protected CustomRecyclerViewAdapter allCardsAdapter, userCardsAdapter;
-    List<BasicCard> userCardsList, allCardsList;
+    List<BasicCard> userCardsList, allCardsList  = new ArrayList<>();;
     Button battleButton;
-    public static final int USER_MAX_CARDS = 4;
+    public static final int USER_MAX_CARDS = 8;
+    CardsForDeck cardsForDeck = new CardsForDeck();
+
 
 
     @Override
@@ -56,8 +58,10 @@ public class ChoseOfDeckActivity extends AppCompatActivity {
 
 
         List<BasicCard> cards = getListDataFromDeck();
-        this.allCardsRv = (RecyclerView) this.findViewById(R.id.recyclerViewFromDeck);
-        allCardsAdapter = new CustomRecyclerViewAdapter(this, cards);
+
+            this.allCardsRv = (RecyclerView) this.findViewById(R.id.recyclerViewFromDeck);
+
+            allCardsAdapter = new CustomRecyclerViewAdapter(this, cards);
         allCardsRv.setAdapter(allCardsAdapter);
         LinearLayoutManager linearLayoutManagerFromDeck = new LinearLayoutManager
                 (this, LinearLayoutManager.HORIZONTAL, false);
@@ -121,21 +125,25 @@ public class ChoseOfDeckActivity extends AppCompatActivity {
                 }
             }
         });
+
+
     }
 
 
     private List<BasicCard> getListDataFromDeck() {
-        CardsForDeck cards = new CardsForDeck();
-        allCardsList = new ArrayList<BasicCard>();
-        allCardsList = cards.returnCards();
+
+            allCardsList = cardsForDeck.returnCards();
 
 
-        return allCardsList;
+
+    return allCardsList;
+
+
     }
 
     private List<BasicCard> getListDataToDeck() {
-        userCardsList = new ArrayList<BasicCard>();
 
+        userCardsList = new ArrayList<BasicCard>();
         return userCardsList;
     }
 
@@ -173,6 +181,8 @@ public class ChoseOfDeckActivity extends AppCompatActivity {
             ft.commit();
         }
         }
+
+
 
 
     public List<BasicCard> getUserCardsList() {

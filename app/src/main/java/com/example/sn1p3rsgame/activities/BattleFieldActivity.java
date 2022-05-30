@@ -24,6 +24,7 @@ import com.example.sn1p3rsgame.R;
 
 import com.example.sn1p3rsgame.cardStuff.BasicCard;
 import com.example.sn1p3rsgame.cardStuff.CardView;
+import com.example.sn1p3rsgame.fragment.CardInformationFragment;
 import com.example.sn1p3rsgame.game.MainCharacter;
 import com.example.sn1p3rsgame.recyclerStuff.CustomRecyclerViewAdapter;
 
@@ -46,6 +47,7 @@ public class BattleFieldActivity extends AppCompatActivity {
     private TextView myCharTv, enemyCharTv;
     private MainCharacter myChar, enemyChar;
     public static final int YOU_WIN = 1;
+//    private Context context;
 
 
 
@@ -99,19 +101,35 @@ public class BattleFieldActivity extends AppCompatActivity {
 
                         CardView vw = (CardView) event.getLocalState();
 
+
+
                         ViewGroup owner = (ViewGroup) vw.getParent();
+
                         owner.removeView(vw);
+
                         LinearLayout container = (LinearLayout) v;
+
                         cardsQueue.offer(vw.getBasicCard());
+
                         cards.remove(vw.getListPosition());
+
                         container.addView(vw);
+
                         BasicCard n = cardsQueue.poll();
+
                         BasicCard n2 = new BasicCard(n.getName(),n.getFraction(),n.getAttackPoints(),
                                 n.getHealthPoints(),n.getImage());
+
                         cards.add(n2);
-                        vw.setVisibility(View.VISIBLE);
+
+
 
                         recyclerView.getAdapter().notifyDataSetChanged();
+
+                        for (int i = 0; i < 4; i++) {
+                            removeUserCards(i);
+                        }
+
 
 
                         for (int i = 0; i < 4; i++) {
@@ -128,10 +146,20 @@ public class BattleFieldActivity extends AppCompatActivity {
 
 
 
-
                         for (int i = 0; i < 4; i++) {
                             checkLineFromEnemy(i);
                         };
+
+                        try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                        for (int i = 0; i < 4; i++) {
+                            removeUserCards(i);
+                            removeEnemyCards(i);
+                        }
 
                         enemyCharTv.setText(enemyChar.getHp() + "");
 
@@ -163,20 +191,42 @@ public class BattleFieldActivity extends AppCompatActivity {
         };
 
 
+
         RelativeLayout layout = findViewById(R.id.main_layout);
         View v = null;
-        for (int i = 23; i >= 0; i--) {  //чтобы клетки шли справа сверзу, а не снизу слева
+        for (int i = 0; i < 12; i++) {  //чтобы клетки шли справа сверзу, а не снизу слева
             v = layout.getChildAt(i);
             if (v instanceof LinearLayout) { //  && v.getId() !== R.id. если появится новый layout, которому не нужен drag
                 v.setOnDragListener(dragListener);
-                TextView child = new TextView(this);
-                child.setText(i+"");
-                ((LinearLayout) v).addView(child);
+//                TextView child = new TextView(this);
+//                child.setText(i+"");
+//                ((LinearLayout) v).addView(child);
             }
         }
+//            View vEnemy = null;
+//        for (int i = 12; i < 24; i++) {
+//            vEnemy = layout.getChildAt(i);
+//            if (vEnemy instanceof LinearLayout){
+//                View finalVEnemy = vEnemy;
+//                vEnemy.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        CardView cv = (CardView) ((LinearLayout) finalVEnemy).getChildAt(0);
+//                        BasicCard bc = cv.getBasicCard();
+//                        CardInformationFragment cardInformationFragment = new CardInformationFragment();
+//                        Bundle bundle = new Bundle();
+//                        bundle.putSerializable(CustomRecyclerViewAdapter.KEY_TO_FRAGMENT, bc);
+//                        cardInformationFragment.setArguments(bundle);
+//                        ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction()
+//                                .add(R.id.main_layout, cardInformationFragment).commit();
+//                    }
+//                });
+//            }
+//        }
 
 
     }
+
 
 
     private List<BasicCard> getListData() {
@@ -188,6 +238,31 @@ public class BattleFieldActivity extends AppCompatActivity {
 
 
         return deckList;
+    }
+    private void removeUserCards(int line) {
+        RelativeLayout layout = findViewById(R.id.main_layout);
+        for (int i = 0 + line * 3; i < 3 + line * 3; i++) {
+            LinearLayout user = (LinearLayout) layout.getChildAt(i);
+            CardView userCardView = (CardView) user.getChildAt(0);
+            if (null == userCardView) continue;
+            if (userCardView.getBasicCard().getHealthPoints() <= 0) {
+                user.removeView(userCardView);
+
+            }
+        }
+    }
+
+    private void removeEnemyCards(int line) {
+        RelativeLayout layout = findViewById(R.id.main_layout);
+        for (int i = 12 + line * 3; i < 15 + line * 3; i++) {
+            LinearLayout user = (LinearLayout) layout.getChildAt(i);
+            CardView enemyCardView = (CardView) user.getChildAt(0);
+            if (null == enemyCardView) continue;
+            if (enemyCardView.getBasicCard().getHealthPoints() <= 0) {
+                user.removeView(enemyCardView);
+
+            }
+        }
     }
 
     private void checkLine(int line) {
@@ -218,18 +293,18 @@ public class BattleFieldActivity extends AppCompatActivity {
 
     private void checkLineFromEnemy(int line) {
         RelativeLayout layout = findViewById(R.id.main_layout);
-        for (int i = 14 + line * 3; i >= 12 + line * 3; i--) {
+        for (int i = 12 + line * 3; i < 15 + line * 3; i++) {
             LinearLayout enemy = (LinearLayout) layout.getChildAt(i);
             CardView enemyCardView = (CardView) enemy.getChildAt(0);
             if (null == enemyCardView) continue;
-            for (int j = 2; j >= 0 ; j--) {
+            for (int j = 0; j < 3 ; j++) {
                 LinearLayout user = (LinearLayout) layout.getChildAt( line * 3 + j);
                 CardView userCardView = (CardView) user.getChildAt(0);
 
                 if (userCardView != null && enemyCardView != null) {
                     userCardView.getBasicCard().damage(enemyCardView.getBasicCard().getAttackPoints());
                     break;
-                } else if (enemyCardView != null && userCardView == null && j == 0) {
+                } else if (enemyCardView != null && userCardView == null && j == 2) {
                     myChar.damage(enemyCardView.getBasicCard().getAttackPoints());
                     break;
                 }
@@ -243,11 +318,9 @@ public class BattleFieldActivity extends AppCompatActivity {
     }
 
     private void setEnemyCard() {
-
-
-
+        CardsForDeck cardsForDeck = new CardsForDeck();
         List<BasicCard> enemyDeckList = new ArrayList<>();
-        List<BasicCard> allCards = new ArrayList<>(CardsForDeck.returnCards());
+        List<BasicCard> allCards = new ArrayList<>(cardsForDeck.returnCards());
         Collections.shuffle(allCards);
         enemyDeckList.add(allCards.get(0));
         allCards.remove(0);
