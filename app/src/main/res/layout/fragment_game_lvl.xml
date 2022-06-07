@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.GameLvlFragment"
+    android:orientation="horizontal"
+    android:clickable="true"
+    android:focusable="true"
+    >
+
+
+
+    <RelativeLayout
+        android:id="@+id/rl_1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="60dp"
+        android:background="@color/white">
+
+
+        <Button
+            android:id="@+id/easyLvl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="150dp"
+            android:background="@color/black"
+            android:textColor="@color/purple_200"
+            android:text="@string/easy" />
+        <Button
+            android:id="@+id/hardLvl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="150dp"
+            android:background="@color/black"
+            android:textColor="@color/purple_200"
+            android:text="@string/hard" />
+
+    </RelativeLayout>
+
+</FrameLayout>

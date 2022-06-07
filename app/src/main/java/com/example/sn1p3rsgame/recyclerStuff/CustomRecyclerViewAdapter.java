@@ -1,6 +1,6 @@
 package com.example.sn1p3rsgame.recyclerStuff;
 
-import static com.example.sn1p3rsgame.activities.ChoseOfDeckActivity.USER_MAX_CARDS;
+import static com.example.sn1p3rsgame.activities.ChoseOfDeckActivity.PLAYER_MAX_CARDS;
 
 import android.content.ClipData;
 import android.content.Context;
@@ -111,7 +111,7 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CardViewHold
 
                     case DragEvent.ACTION_DROP:
                         CardView vw = (CardView) event.getLocalState();
-                        if (cards.size() == USER_MAX_CARDS && context instanceof ChoseOfDeckActivity) {
+                        if (cards.size() == PLAYER_MAX_CARDS && context instanceof ChoseOfDeckActivity) {
                             ChoseOfDeckActivity chose = (ChoseOfDeckActivity) context;
                             int userPosition = cardView.getListPosition();
                             int fromPosition = vw.getListPosition();

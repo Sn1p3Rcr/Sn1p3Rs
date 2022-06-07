@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 
 import java.io.Serializable;
 
-public class BasicCard implements Parcelable, Serializable {
+public class BasicCard implements Parcelable, Serializable, Comparable<BasicCard>{
     protected String name,fraction,imageName;
     protected int healthPoints ,attackPoints ;
     Bitmap bitmap;
@@ -104,5 +104,18 @@ public class BasicCard implements Parcelable, Serializable {
                 "; fraction= " + fraction +
                 "; healthPoints= " + healthPoints +
                 "; attackPoints=" + attackPoints;
+    }
+
+
+
+    public  static BasicCard copy(BasicCard c) {
+        return new BasicCard(c.getName(), c.getFraction(), c.getAttackPoints(), c.getHealthPoints(), c.getImage());
+    }
+
+    @Override
+    public int compareTo(BasicCard o) {
+        int c1 = this.getAttackPoints() + this.getHealthPoints();
+        int c2 = o.getAttackPoints() + o.getHealthPoints();
+        return c1 - c2;
     }
 }

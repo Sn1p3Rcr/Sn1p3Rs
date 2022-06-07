@@ -9,17 +9,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Rect;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.DragEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 
@@ -28,6 +23,7 @@ import com.example.sn1p3rsgame.R;
 import com.example.sn1p3rsgame.cardStuff.BasicCard;
 import com.example.sn1p3rsgame.cardStuff.CardView;
 import com.example.sn1p3rsgame.fragment.DefeatFragment;
+import com.example.sn1p3rsgame.fragment.GameLvlFragment;
 import com.example.sn1p3rsgame.fragment.GameOverFragment;
 import com.example.sn1p3rsgame.recyclerStuff.CustomRecyclerViewAdapter;
 
@@ -40,11 +36,10 @@ public class ChoseOfDeckActivity extends AppCompatActivity {
     public final static String TO_WIN_FRAGMENT = "win";
 
     protected CustomRecyclerViewAdapter allCardsAdapter, userCardsAdapter;
-    List<BasicCard> userCardsList, allCardsList  = new ArrayList<>();;
+    List<BasicCard> userCardsList, allCardsList  = new ArrayList<>();
     Button battleButton;
-    public static final int USER_MAX_CARDS = 8;
+    public static final int PLAYER_MAX_CARDS = 8;
     CardsForDeck cardsForDeck = new CardsForDeck();
-
 
 
     @Override
@@ -55,13 +50,8 @@ public class ChoseOfDeckActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chose_of_deck);
 
         battleButton = findViewById(R.id.battleButton);
-
-
-        List<BasicCard> cards = getListDataFromDeck();
-
-            this.allCardsRv = (RecyclerView) this.findViewById(R.id.recyclerViewFromDeck);
-
-            allCardsAdapter = new CustomRecyclerViewAdapter(this, cards);
+        this.allCardsRv = (RecyclerView) this.findViewById(R.id.recyclerViewFromDeck);
+        allCardsAdapter = new CustomRecyclerViewAdapter(this, getListDataFromDeck());
         allCardsRv.setAdapter(allCardsAdapter);
         LinearLayoutManager linearLayoutManagerFromDeck = new LinearLayoutManager
                 (this, LinearLayoutManager.HORIZONTAL, false);
@@ -96,7 +86,7 @@ public class ChoseOfDeckActivity extends AppCompatActivity {
                         RecyclerView container = (RecyclerView) v;
                         container.addView(vw);
 
-                        if (userCardsList.size() < USER_MAX_CARDS) {
+                        if (userCardsList.size() < PLAYER_MAX_CARDS) {
                             userCardsList.add(vw.getBasicCard());
                             allCardsList.remove(vw.getBasicCard());
                             allCardsRv.getAdapter().notifyDataSetChanged();
@@ -114,14 +104,17 @@ public class ChoseOfDeckActivity extends AppCompatActivity {
         battleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (userCardsList.size() < USER_MAX_CARDS) {
+                if (userCardsList.size() < PLAYER_MAX_CARDS) {
                     Toast.makeText(getApplicationContext(), "Выберите 8 карт", Toast.LENGTH_SHORT).show();
                 } else {
-                    Intent intent = new Intent(ChoseOfDeckActivity.this, BattleFieldActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putParcelableArrayList("deckList", (ArrayList<? extends Parcelable>) userCardsList);
-                    intent.putExtras(bundle);
-                    startActivityForResult(intent, BattleFieldActivity.YOU_WIN);
+
+
+                    Fragment fragment = new GameLvlFragment();
+                    FragmentManager fm =getSupportFragmentManager();
+                    FragmentTransaction ft = fm.beginTransaction();
+                    ft.add(R.id.fl_chose,fragment);
+                    ft.commit();
+
                 }
             }
         });
@@ -132,13 +125,8 @@ public class ChoseOfDeckActivity extends AppCompatActivity {
 
     private List<BasicCard> getListDataFromDeck() {
 
-            allCardsList = cardsForDeck.returnCards();
-
-
-
-    return allCardsList;
-
-
+        allCardsList = cardsForDeck.cardsForGame();
+        return allCardsList;
     }
 
     private List<BasicCard> getListDataToDeck() {
@@ -173,16 +161,14 @@ public class ChoseOfDeckActivity extends AppCompatActivity {
             FragmentTransaction ft = fm.beginTransaction();
             ft.add(R.id.fl_chose, fragment);
             ft.commit();
-        } else if (requestCode == BattleFieldActivity.YOU_WIN && resultCode == RESULT_CANCELED){
+        } else if (requestCode == BattleFieldActivity.YOU_WIN && resultCode == RESULT_CANCELED) {
             Fragment fragment = new DefeatFragment();
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
             ft.add(R.id.fl_chose, fragment);
             ft.commit();
         }
-        }
-
-
+    }
 
 
     public List<BasicCard> getUserCardsList() {

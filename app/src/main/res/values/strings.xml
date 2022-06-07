@@ -9,4 +9,6 @@
     <string name="game_over">Game over</string>
     <string name="you_win">You win</string>
     <string name="back_to_menu">Back to menu</string>
+    <string name="easy">easy</string>
+    <string name="hard">hard</string>
 </resources>

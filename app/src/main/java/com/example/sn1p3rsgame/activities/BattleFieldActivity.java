@@ -1,6 +1,8 @@
 package com.example.sn1p3rsgame.activities;
 
-import android.content.Context;
+
+import static com.example.sn1p3rsgame.activities.ChoseOfDeckActivity.PLAYER_MAX_CARDS;
+
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -14,8 +16,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,7 +24,6 @@ import com.example.sn1p3rsgame.R;
 
 import com.example.sn1p3rsgame.cardStuff.BasicCard;
 import com.example.sn1p3rsgame.cardStuff.CardView;
-import com.example.sn1p3rsgame.fragment.CardInformationFragment;
 import com.example.sn1p3rsgame.game.MainCharacter;
 import com.example.sn1p3rsgame.recyclerStuff.CustomRecyclerViewAdapter;
 
@@ -34,8 +33,6 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 public class BattleFieldActivity extends AppCompatActivity {
@@ -43,11 +40,14 @@ public class BattleFieldActivity extends AppCompatActivity {
     public static final String LOG_TAG = "AndroidExample";
 
     private RecyclerView recyclerView;
-    private Queue<BasicCard> cardsQueue;
+    private Queue<BasicCard> userCardQueue;
+    private List<BasicCard> enemyCardsList = new ArrayList<>();
     private TextView myCharTv, enemyCharTv;
     private MainCharacter myChar, enemyChar;
     public static final int YOU_WIN = 1;
-//    private Context context;
+    private int lvl;
+
+
 
 
 
@@ -67,12 +67,31 @@ public class BattleFieldActivity extends AppCompatActivity {
         myCharTv.setText(myChar.getHp() + "");
         enemyCharTv.setText(enemyChar.getHp() + "");
 
+        lvl = getIntent().getIntExtra("lvl", 10);
+        List<BasicCard> allEnemyCards = CardsForDeck.cardsForGame();
 
-        cardsQueue = new LinkedList<BasicCard>();
+        if (lvl < 2) {
+            for (int i = 0; i < PLAYER_MAX_CARDS; i++) {
+                enemyCardsList.add(allEnemyCards.remove(0));
+            }
+        } else {
+            int diff = (int) (3 + Math.random() * 3);
+            for (int i = 0; i < PLAYER_MAX_CARDS; i++) {
+                if (i <= diff){
+                    enemyCardsList.add(allEnemyCards.remove(allEnemyCards.size()-1));
+                }
+                else{
+                    Collections.shuffle(allEnemyCards);
+                    enemyCardsList.add(allEnemyCards.remove(0));
+                }
+            }
+        }
+
+        userCardQueue = new LinkedList<BasicCard>();
         Bundle bundle = getIntent().getExtras();
         ArrayList<BasicCard> deckList = bundle.getParcelableArrayList("deckList");
         for (BasicCard c : deckList) {
-            cardsQueue.add(c);
+            userCardQueue.add(c);
         }
         List<BasicCard> cards = getListData();
         this.recyclerView = (RecyclerView) this.findViewById(R.id.recyclerView);
@@ -100,6 +119,9 @@ public class BattleFieldActivity extends AppCompatActivity {
                     case DragEvent.ACTION_DROP:
 
                         CardView vw = (CardView) event.getLocalState();
+                        CardView vw2 = new CardView(vw.getContext());
+                        vw2.setBasicCard(BasicCard.copy(vw.getBasicCard()));
+
 
 
 
@@ -109,16 +131,14 @@ public class BattleFieldActivity extends AppCompatActivity {
 
                         LinearLayout container = (LinearLayout) v;
 
-                        cardsQueue.offer(vw.getBasicCard());
+                        userCardQueue.offer(vw.getBasicCard());
 
                         cards.remove(vw.getListPosition());
 
-                        container.addView(vw);
+                        container.addView(vw2);
 
-                        BasicCard n = cardsQueue.poll();
-
-                        BasicCard n2 = new BasicCard(n.getName(),n.getFraction(),n.getAttackPoints(),
-                                n.getHealthPoints(),n.getImage());
+                        BasicCard n = userCardQueue.poll();
+                        BasicCard n2 = BasicCard.copy(n);
 
                         cards.add(n2);
 
@@ -194,7 +214,7 @@ public class BattleFieldActivity extends AppCompatActivity {
 
         RelativeLayout layout = findViewById(R.id.main_layout);
         View v = null;
-        for (int i = 0; i < 12; i++) {  //чтобы клетки шли справа сверзу, а не снизу слева
+        for (int i = 0; i < 12; i++) {
             v = layout.getChildAt(i);
             if (v instanceof LinearLayout) { //  && v.getId() !== R.id. если появится новый layout, которому не нужен drag
                 v.setOnDragListener(dragListener);
@@ -203,26 +223,7 @@ public class BattleFieldActivity extends AppCompatActivity {
 //                ((LinearLayout) v).addView(child);
             }
         }
-//            View vEnemy = null;
-//        for (int i = 12; i < 24; i++) {
-//            vEnemy = layout.getChildAt(i);
-//            if (vEnemy instanceof LinearLayout){
-//                View finalVEnemy = vEnemy;
-//                vEnemy.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        CardView cv = (CardView) ((LinearLayout) finalVEnemy).getChildAt(0);
-//                        BasicCard bc = cv.getBasicCard();
-//                        CardInformationFragment cardInformationFragment = new CardInformationFragment();
-//                        Bundle bundle = new Bundle();
-//                        bundle.putSerializable(CustomRecyclerViewAdapter.KEY_TO_FRAGMENT, bc);
-//                        cardInformationFragment.setArguments(bundle);
-//                        ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction()
-//                                .add(R.id.main_layout, cardInformationFragment).commit();
-//                    }
-//                });
-//            }
-//        }
+
 
 
     }
@@ -232,7 +233,7 @@ public class BattleFieldActivity extends AppCompatActivity {
     private List<BasicCard> getListData() {
         ArrayList<BasicCard> deckList = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
-            BasicCard last = (cardsQueue.poll());
+            BasicCard last = (userCardQueue.poll());
             deckList.add(last);
         }
 
@@ -318,18 +319,19 @@ public class BattleFieldActivity extends AppCompatActivity {
     }
 
     private void setEnemyCard() {
-        CardsForDeck cardsForDeck = new CardsForDeck();
+
         List<BasicCard> enemyDeckList = new ArrayList<>();
-        List<BasicCard> allCards = new ArrayList<>(cardsForDeck.returnCards());
-        Collections.shuffle(allCards);
-        enemyDeckList.add(allCards.get(0));
-        allCards.remove(0);
+
+        Collections.shuffle(enemyCardsList);
+        enemyDeckList.add(BasicCard.copy(enemyCardsList.get(0)));
+//        enemyDeckList.remove(0);
         int randomLine = (int) (Math.random() * 4);
         int randomLayout = (int) (Math.random() * 3);
         RelativeLayout layout = findViewById(R.id.main_layout);
         LinearLayout enemy = (LinearLayout) layout.getChildAt(12 + randomLine * 3 + randomLayout);
         CardView cardView = new CardView(this);
         cardView.setBasicCard(enemyDeckList.get(0));
+
         if (enemy.getChildCount() > 0) {
             setEnemyCard();
             return;
