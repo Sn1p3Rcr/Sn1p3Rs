@@ -38,7 +38,7 @@ public class ChoseOfDeckActivity extends AppCompatActivity {
     protected CustomRecyclerViewAdapter allCardsAdapter, userCardsAdapter;
     List<BasicCard> userCardsList, allCardsList  = new ArrayList<>();
     Button battleButton;
-    public static final int PLAYER_MAX_CARDS = 8;
+    public static final int PLAYER_MAX_CARDS = 4;
     CardsForDeck cardsForDeck = new CardsForDeck();
 
 

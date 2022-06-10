@@ -7,171 +7,184 @@
     android:background="@drawable/bg"
     android:id="@+id/main_layout"
 
+
+
     tools:context=".activities.BattleFieldActivity">
 
 
-    <LinearLayout
+    <com.example.sn1p3rsgame.MyLinearLayout
         android:id="@+id/lo1"
+        line="0"
         android:layout_width="60dp"
         android:layout_height="40dp"
+        android:layout_above="@+id/lo4"
         android:layout_marginLeft="265dp"
-        android:layout_marginTop="100dp"
+
         android:background="@drawable/customborder"
 
         android:orientation="horizontal">
 
-    </LinearLayout>
+    </com.example.sn1p3rsgame.MyLinearLayout>
 
-    <LinearLayout
+    <com.example.sn1p3rsgame.MyLinearLayout
         android:id="@+id/lo2"
+        line="0"
         android:layout_width="60dp"
         android:layout_height="40dp"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/lo5"
         android:layout_marginLeft="205dp"
-        android:layout_marginTop="100dp"
+
         android:background="@drawable/customborder"
 
         android:orientation="horizontal">
 
-    </LinearLayout>
+    </com.example.sn1p3rsgame.MyLinearLayout>
 
-    <LinearLayout
+    <com.example.sn1p3rsgame.MyLinearLayout
         android:id="@+id/lo3"
+        line="0"
         android:layout_width="60dp"
         android:layout_height="40dp"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/lo6"
         android:layout_marginLeft="145dp"
-        android:layout_marginTop="100dp"
+
         android:background="@drawable/customborder"
 
         android:orientation="horizontal">
 
-    </LinearLayout>
+    </com.example.sn1p3rsgame.MyLinearLayout>
 
-    <LinearLayout
+    <com.example.sn1p3rsgame.MyLinearLayout
         android:id="@+id/lo4"
+        line="1"
         android:layout_width="60dp"
         android:layout_height="40dp"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/lo7"
         android:layout_marginLeft="260dp"
-        android:layout_marginTop="140dp"
+
         android:background="@drawable/customborder"
 
         android:orientation="horizontal">
 
-    </LinearLayout>
+    </com.example.sn1p3rsgame.MyLinearLayout>
 
-    <LinearLayout
+    <com.example.sn1p3rsgame.MyLinearLayout
         android:id="@+id/lo5"
+        line="1"
         android:layout_width="60dp"
         android:layout_height="40dp"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/lo8"
         android:layout_marginLeft="200dp"
-        android:layout_marginTop="140dp"
+
         android:background="@drawable/customborder"
 
         android:orientation="horizontal">
 
-    </LinearLayout>
+    </com.example.sn1p3rsgame.MyLinearLayout>
 
-    <LinearLayout
+    <com.example.sn1p3rsgame.MyLinearLayout
         android:id="@+id/lo6"
+        line="1"
         android:layout_width="60dp"
         android:layout_height="40dp"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/lo9"
         android:layout_marginLeft="140dp"
-        android:layout_marginTop="140dp"
         android:background="@drawable/customborder"
 
         android:orientation="horizontal">
 
-    </LinearLayout>
+    </com.example.sn1p3rsgame.MyLinearLayout>
 
-    <LinearLayout
+    <com.example.sn1p3rsgame.MyLinearLayout
         android:id="@+id/lo7"
+        line="2"
         android:layout_width="60dp"
         android:layout_height="40dp"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/lo10"
         android:layout_marginLeft="255dp"
-        android:layout_marginTop="180dp"
         android:background="@drawable/customborder"
 
         android:orientation="horizontal">
 
-    </LinearLayout>
+    </com.example.sn1p3rsgame.MyLinearLayout>
 
-    <LinearLayout
+    <com.example.sn1p3rsgame.MyLinearLayout
         android:id="@+id/lo8"
+        line="2"
         android:layout_width="60dp"
         android:layout_height="40dp"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/lo11"
         android:layout_marginLeft="195dp"
-        android:layout_marginTop="180dp"
         android:background="@drawable/customborder"
 
         android:orientation="horizontal">
 
-    </LinearLayout>
+    </com.example.sn1p3rsgame.MyLinearLayout>
 
-    <LinearLayout
+    <com.example.sn1p3rsgame.MyLinearLayout
         android:id="@+id/lo9"
+        line="2"
         android:layout_width="60dp"
         android:layout_height="40dp"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/lo12"
         android:layout_marginLeft="135dp"
-        android:layout_marginTop="180dp"
+
         android:background="@drawable/customborder"
 
         android:orientation="horizontal">
 
-    </LinearLayout>
+    </com.example.sn1p3rsgame.MyLinearLayout>
 
-    <LinearLayout
+    <com.example.sn1p3rsgame.MyLinearLayout
         android:id="@+id/lo10"
+        line="3"
         android:layout_width="60dp"
         android:layout_height="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="250dp"
-        android:layout_marginTop="220dp"
+        android:layout_above="@id/recyclerView"
+        android:layout_marginBottom="30dp"
+        android:layout_toRightOf="@+id/lo11"
         android:background="@drawable/customborder"
 
         android:orientation="horizontal">
 
-    </LinearLayout>
+    </com.example.sn1p3rsgame.MyLinearLayout>
 
-    <LinearLayout
+    <com.example.sn1p3rsgame.MyLinearLayout
         android:id="@+id/lo11"
+        line="3"
         android:layout_width="60dp"
         android:layout_height="40dp"
-        android:layout_alignParentTop="true"
+        android:layout_above="@id/recyclerView"
+        android:layout_marginBottom="30dp"
         android:layout_marginLeft="190dp"
-        android:layout_marginTop="220dp"
+
         android:background="@drawable/customborder"
 
         android:orientation="horizontal">
 
-    </LinearLayout>
+    </com.example.sn1p3rsgame.MyLinearLayout>
 
-    <LinearLayout
+    <com.example.sn1p3rsgame.MyLinearLayout
         android:id="@+id/lo12"
+        line="3"
         android:layout_width="60dp"
         android:layout_height="40dp"
-        android:layout_alignParentTop="true"
+        android:layout_above="@id/recyclerView"
         android:layout_marginLeft="130dp"
-        android:layout_marginTop="220dp"
+        android:layout_marginBottom="30dp"
+
         android:background="@drawable/customborder"
 
         android:orientation="horizontal">
 
-    </LinearLayout>
+    </com.example.sn1p3rsgame.MyLinearLayout>
 
     <LinearLayout
         android:id="@+id/lo13"
         android:layout_width="60dp"
         android:layout_height="40dp"
-        android:layout_alignParentTop="true"
+        android:layout_above="@id/lo16"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="100dp"
         android:layout_marginRight="240dp"
         android:background="@drawable/customborder"
 
@@ -183,9 +196,9 @@
         android:id="@+id/lo14"
         android:layout_width="60dp"
         android:layout_height="40dp"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/lo17"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="100dp"
+
         android:layout_marginRight="180dp"
         android:background="@drawable/customborder"
 
@@ -197,9 +210,8 @@
         android:id="@+id/lo15"
         android:layout_width="60dp"
         android:layout_height="40dp"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/lo18"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="100dp"
         android:layout_marginRight="120dp"
         android:background="@drawable/customborder"
 
@@ -211,9 +223,9 @@
         android:id="@+id/lo16"
         android:layout_width="60dp"
         android:layout_height="40dp"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/lo19"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="140dp"
+
         android:layout_marginRight="245dp"
         android:background="@drawable/customborder"
 
@@ -225,9 +237,9 @@
         android:id="@+id/lo17"
         android:layout_width="60dp"
         android:layout_height="40dp"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/lo20"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="140dp"
+
         android:layout_marginRight="185dp"
         android:background="@drawable/customborder"
 
@@ -239,9 +251,8 @@
         android:id="@+id/lo18"
         android:layout_width="60dp"
         android:layout_height="40dp"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/lo21"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="140dp"
         android:layout_marginRight="125dp"
         android:background="@drawable/customborder"
 
@@ -253,9 +264,9 @@
         android:id="@+id/lo19"
         android:layout_width="60dp"
         android:layout_height="40dp"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/lo22"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="180dp"
+
         android:layout_marginRight="250dp"
         android:background="@drawable/customborder"
 
@@ -267,9 +278,9 @@
         android:id="@+id/lo20"
         android:layout_width="60dp"
         android:layout_height="40dp"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/lo23"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="180dp"
+
         android:layout_marginRight="190dp"
         android:background="@drawable/customborder"
 
@@ -281,9 +292,8 @@
         android:id="@+id/lo21"
         android:layout_width="60dp"
         android:layout_height="40dp"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/lo24"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="180dp"
         android:layout_marginRight="130dp"
         android:background="@drawable/customborder"
 
@@ -295,10 +305,10 @@
         android:id="@+id/lo22"
         android:layout_width="60dp"
         android:layout_height="40dp"
-        android:layout_alignParentTop="true"
+        android:layout_above="@id/recyclerView"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="220dp"
         android:layout_marginRight="255dp"
+        android:layout_marginBottom="30dp"
         android:background="@drawable/customborder"
 
         android:orientation="horizontal">
@@ -309,9 +319,9 @@
         android:id="@+id/lo23"
         android:layout_width="60dp"
         android:layout_height="40dp"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/recyclerView"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="220dp"
+        android:layout_marginBottom="30dp"
         android:layout_marginRight="195dp"
         android:background="@drawable/customborder"
 
@@ -323,9 +333,9 @@
         android:id="@+id/lo24"
         android:layout_width="60dp"
         android:layout_height="40dp"
-        android:layout_alignParentTop="true"
+        android:layout_above="@id/recyclerView"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="220dp"
+        android:layout_marginBottom="30dp"
         android:layout_marginRight="135dp"
         android:background="@drawable/customborder"
 
@@ -333,34 +343,24 @@
 
     </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/cardsLine"
-        android:layout_width="375dp"
-        android:layout_height="115dp"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:weightSum="4">
+
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
+
             android:layout_width="375dp"
             android:layout_height="115dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_alignParentBottom="true"
+            />
 
-
-            app:layout_constraintTop_toTopOf="parent" />
-    </RelativeLayout>
 
 
     <ImageView
         android:layout_width="130dp"
         android:layout_height="120dp"
-        android:layout_marginTop="100dp"
-
+        android:layout_above="@+id/my_char_tv"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/main_char"
 
 
@@ -370,28 +370,27 @@
         android:id="@+id/my_char_tv"
         android:layout_width="100dp"
         android:layout_height="30dp"
-        android:layout_marginTop="240dp"
         android:layout_marginLeft="10dp"
-        android:textColor="@color/black"
-
-
-        />
+        android:layout_above="@+id/recyclerView"
+        android:layout_marginBottom="30dp"
+        android:textColor="@color/black" />
 
     <ImageView
         android:layout_width="130dp"
         android:layout_height="120dp"
-        android:layout_marginTop="100dp"
         android:layout_alignParentRight="true"
-        android:background="@drawable/enemy_main_char"
-        />
+        android:layout_above="@+id/enemy_char_tv"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/enemy_main_char" />
 
     <TextView
         android:id="@+id/enemy_char_tv"
         android:layout_width="100dp"
         android:layout_height="30dp"
-        android:layout_marginTop="240dp"
-        android:layout_marginRight="10dp"
         android:layout_alignParentRight="true"
+        android:layout_above="@+id/recyclerView"
+        android:layout_marginBottom="30dp"
+        android:layout_marginRight="10dp"
         android:textColor="@color/black"
 
 
