@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -28,7 +29,6 @@ import java.util.List;
 
 public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CardViewHolder> {
     public static final String KEY_TO_FRAGMENT = "basicCard";
-    public static final String KEY_TO_FRAGMENT1 = "basicCard1";
     private List<BasicCard> cards;
     private final Context context;
     private LayoutInflater myLayOutInflater;
@@ -80,27 +80,7 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CardViewHold
         CardView cardView = holder.getCardView();
 
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-
-            public void onClick(View view) {
-                if (context instanceof ChoseOfDeckActivity) {
-                    CardInformationFragment cardInformationFragment = new CardInformationFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable(KEY_TO_FRAGMENT, card);
-                    cardInformationFragment.setArguments(bundle);
-                    ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction()
-                            .add(R.id.fl_chose, cardInformationFragment).commit();
-                } else if (context instanceof BattleFieldActivity){
-                    CardInformationFragment cardInformationFragment = new CardInformationFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable(KEY_TO_FRAGMENT, card);
-                    cardInformationFragment.setArguments(bundle);
-                    ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction()
-                            .add(R.id.main_layout, cardInformationFragment).commit();
-                }
-            }
-        });
+        holder.itemView.setOnClickListener (CardView.FRAGMENT_LISTENER);
 
         cardView.setOnDragListener(new View.OnDragListener() {
             @Override

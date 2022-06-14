@@ -20,11 +20,6 @@ import java.util.ArrayList;
 
 public class GameLvlFragment extends Fragment implements View.OnClickListener {
     Button easyLvl,hardLvl;
-
-
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -35,10 +30,6 @@ public class GameLvlFragment extends Fragment implements View.OnClickListener {
         easyLvl.setOnClickListener(this);
 
         hardLvl.setOnClickListener(this);
-
-
-
-
         return view;
     }
 

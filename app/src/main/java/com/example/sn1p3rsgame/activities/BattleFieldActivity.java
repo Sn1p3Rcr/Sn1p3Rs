@@ -3,12 +3,12 @@ package com.example.sn1p3rsgame.activities;
 
 import static com.example.sn1p3rsgame.activities.ChoseOfDeckActivity.PLAYER_MAX_CARDS;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.DragEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -46,9 +46,76 @@ public class BattleFieldActivity extends AppCompatActivity {
     private TextView myCharTv, enemyCharTv;
     private MainCharacter myChar, enemyChar;
     public static final int YOU_WIN = 1;
-    private int lvl,line;
+    private int lvl, line;
+    private Context context;
+    private List<BasicCard> cards;
+    private View.OnDragListener dragListener = new View.OnDragListener() {
+        @Override
+        public boolean onDrag(View v, DragEvent event) {
+            int dragEvent = event.getAction();
+            switch (dragEvent) {
+                case DragEvent.ACTION_DRAG_ENTERED:
+                    v.setBackgroundResource(R.drawable.customborder1);
+                    break;
+                case DragEvent.ACTION_DRAG_EXITED:
+                    v.setBackgroundResource(R.drawable.customborder);
+                    break;
+                case DragEvent.ACTION_DROP:
+                    CardView draggedCard = (CardView) event.getLocalState();
+                    CardView newCardView = new CardView(draggedCard.getContext());
+                    newCardView.setBasicCard(BasicCard.copy(draggedCard.getBasicCard()));
+                    newCardView.setOnClickListener(CardView.FRAGMENT_LISTENER);
+//                    ViewGroup owner = (ViewGroup) draggedCard.getParent();
+//                    owner.removeView(draggedCard);
+                    MyLinearLayout container = (MyLinearLayout) v;
+                    container.addView(newCardView);
+                    line = container.line;
+                    userCardQueue.offer(draggedCard.getBasicCard());
+                    cards.remove(draggedCard.getListPosition());
+                    cards.add(BasicCard.copy(userCardQueue.poll()));
+                    recyclerView.getAdapter().notifyDataSetChanged();
+                    for (int i = 0; i < 4; i++) {
+                        attackByLine(i);
+                    }
+                    sleep();
+                    for (int i = 0; i < 4; i++) {
+                        removeEnemyDiedCards(i);
+                    }
+                    setEnemyCard(line);
+                    for (int i = 0; i < 4; i++) {
+                        enemyAttackByLine(i);
+                    }
+                    sleep();
+                    for (int i = 0; i < 4; i++) {
+                        removeUserDiedCards(i);
+                    }
+                    enemyCharTv.setText(enemyChar.getHp() + "");
+                    myCharTv.setText(myChar.getHp() + "");
+                    if (enemyChar.isDead()) {
+                        Intent i = getIntent();
+                        setResult(RESULT_OK, i);
+                        finish();
+                    } else if (myChar.isDead()) {
+                        Intent i = getIntent();
+                        setResult(RESULT_CANCELED, i);
+                        finish();
+                    }
+                    break;
+                case DragEvent.ACTION_DRAG_ENDED:
+                    v.setBackgroundResource(R.drawable.customborder);
+                    break;
+            }
+            return true;
+        }
+    };
 
-
+    private void sleep() {
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,16 +129,14 @@ public class BattleFieldActivity extends AppCompatActivity {
         enemyChar = new MainCharacter(30);
         myCharTv.setText(myChar.getHp() + "");
         enemyCharTv.setText(enemyChar.getHp() + "");
-
         lvl = getIntent().getIntExtra("lvl", 10);
         List<BasicCard> allEnemyCards = CardsForDeck.cardsForGame();
-
         if (lvl < 2) {
             for (int i = 0; i < PLAYER_MAX_CARDS; i++) {
                 enemyCardsList.add(allEnemyCards.remove(0));
             }
         } else {
-            int diff = (int) (3 + Math.random() * 3);
+            int diff = (int) (4 + Math.random() * 2);
             for (int i = 0; i < PLAYER_MAX_CARDS; i++) {
                 if (i <= diff) {
                     enemyCardsList.add(allEnemyCards.remove(allEnemyCards.size() - 1));
@@ -81,140 +146,25 @@ public class BattleFieldActivity extends AppCompatActivity {
                 }
             }
         }
-
         userCardQueue = new LinkedList<BasicCard>();
         Bundle bundle = getIntent().getExtras();
         ArrayList<BasicCard> deckList = bundle.getParcelableArrayList("deckList");
         for (BasicCard c : deckList) {
             userCardQueue.add(c);
         }
-        List<BasicCard> cards = getListData();
-        this.recyclerView = (RecyclerView) this.findViewById(R.id.recyclerView);
-
+        cards = getListData();
+        recyclerView = this.findViewById(R.id.recyclerView);
         recyclerView.setAdapter(new CustomRecyclerViewAdapter(this, cards));
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
-
-
-        View.OnDragListener dragListener = new View.OnDragListener() {
-            @Override
-            public boolean onDrag(View v, DragEvent event) {
-
-                int dragEvent = event.getAction();
-
-                switch (dragEvent) {
-                    case DragEvent.ACTION_DRAG_ENTERED:
-                        v.setBackgroundResource(R.drawable.customborder1);
-                        return true;
-
-                    case DragEvent.ACTION_DRAG_EXITED:
-                        v.setBackgroundResource(R.drawable.customborder);
-                        break;
-
-                    case DragEvent.ACTION_DROP:
-
-                        CardView vw = (CardView) event.getLocalState();
-                        CardView vw2 = new CardView(vw.getContext());
-                        vw2.setBasicCard(BasicCard.copy(vw.getBasicCard()));
-
-
-                        ViewGroup owner = (ViewGroup) vw.getParent();
-
-                        owner.removeView(vw);
-
-                        MyLinearLayout container = (MyLinearLayout) v;
-                        line = container.line;
-                        userCardQueue.offer(vw.getBasicCard());
-
-                        cards.remove(vw.getListPosition());
-
-                        container.addView(vw2);
-
-                        BasicCard n = userCardQueue.poll();
-                        BasicCard n2 = BasicCard.copy(n);
-
-                        cards.add(n2);
-
-
-                        recyclerView.getAdapter().notifyDataSetChanged();
-
-
-                        for (int i = 0; i < 4; i++) {
-                            checkLine(i);
-                        }
-                        ;
-
-                        for (int i = 0; i < 4; i++) {
-                            removeEnemyCards(i);
-                        }
-
-                        try {
-                            Thread.sleep(100);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-
-                        setEnemyCard();
-
-
-                        for (int i = 0; i < 4; i++) {
-                            checkLineFromEnemy(i);
-                        }
-                        ;
-
-                        try {
-                            Thread.sleep(100);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-
-                        for (int i = 0; i < 4; i++) {
-                            removeUserCards(i);
-                        }
-
-                        enemyCharTv.setText(enemyChar.getHp() + "");
-
-                        myCharTv.setText(myChar.getHp() + "");
-
-                        if (enemyChar.isDead()) {
-                            Intent i = getIntent();
-                            setResult(RESULT_OK, i);
-                            finish();
-                        } else if (myChar.isDead()) {
-                            Intent i = getIntent();
-                            setResult(RESULT_CANCELED, i);
-                            finish();
-                        }
-
-                        return true;
-
-                    case DragEvent.ACTION_DRAG_ENDED:
-                        v.setBackgroundResource(R.drawable.customborder);
-
-
-                        return true;
-
-
-                }
-
-                return true;
-            }
-        };
-
-
         RelativeLayout layout = findViewById(R.id.main_layout);
         View v = null;
         for (int i = 0; i < 12; i++) {
             v = layout.getChildAt(i);
-            if (v instanceof MyLinearLayout) { //  && v.getId() !== R.id. если появится новый layout, которому не нужен drag
+            if (v instanceof MyLinearLayout) {
                 v.setOnDragListener(dragListener);
-//                TextView child = new TextView(this);
-//                child.setText(i+"");
-//                ((LinearLayout) v).addView(child);
             }
         }
-
-
     }
 
 
@@ -224,12 +174,10 @@ public class BattleFieldActivity extends AppCompatActivity {
             BasicCard last = (userCardQueue.poll());
             deckList.add(last);
         }
-
-
         return deckList;
     }
 
-    private void removeUserCards(int line) {
+    private void removeUserDiedCards(int line) {
         RelativeLayout layout = findViewById(R.id.main_layout);
         for (int i = 0 + line * 3; i < 3 + line * 3; i++) {
             LinearLayout user = (MyLinearLayout) layout.getChildAt(i);
@@ -237,12 +185,11 @@ public class BattleFieldActivity extends AppCompatActivity {
             if (null == userCardView) continue;
             if (userCardView.getBasicCard().getHealthPoints() <= 0) {
                 user.removeView(userCardView);
-
             }
         }
     }
 
-    private void removeEnemyCards(int line) {
+    private void removeEnemyDiedCards(int line) {
         RelativeLayout layout = findViewById(R.id.main_layout);
         for (int i = 12 + line * 3; i < 15 + line * 3; i++) {
             LinearLayout user = (LinearLayout) layout.getChildAt(i);
@@ -250,12 +197,11 @@ public class BattleFieldActivity extends AppCompatActivity {
             if (null == enemyCardView) continue;
             if (enemyCardView.getBasicCard().getHealthPoints() <= 0) {
                 user.removeView(enemyCardView);
-
             }
         }
     }
 
-    private void checkLine(int line) {
+    private void attackByLine(int line) {
         RelativeLayout layout = findViewById(R.id.main_layout);
         for (int i = 0 + line * 3; i < 3 + line * 3; i++) {
             LinearLayout user = (MyLinearLayout) layout.getChildAt(i);
@@ -272,16 +218,11 @@ public class BattleFieldActivity extends AppCompatActivity {
                     enemyChar.damage(userCardView.getBasicCard().getAttackPoints());
                     break;
                 }
-
-
             }
-
-
         }
-
     }
 
-    private void checkLineFromEnemy(int line) {
+    private void enemyAttackByLine(int line) {
         RelativeLayout layout = findViewById(R.id.main_layout);
         for (int i = 12 + line * 3; i < 15 + line * 3; i++) {
             LinearLayout enemy = (LinearLayout) layout.getChildAt(i);
@@ -298,53 +239,57 @@ public class BattleFieldActivity extends AppCompatActivity {
                     myChar.damage(enemyCardView.getBasicCard().getAttackPoints());
                     break;
                 }
-
-
             }
-
-
         }
-
     }
 
-    private void setEnemyCard() {
-
+    private void setEnemyCard(int line) {
+        RelativeLayout layout = findViewById(R.id.main_layout);
         List<BasicCard> enemyDeckList = new ArrayList<>();
+
         if (lvl < 2) {
             Collections.shuffle(enemyCardsList);
             enemyDeckList.add(BasicCard.copy(enemyCardsList.get(0)));
-//        enemyDeckList.remove(0);
             int randomLine = (int) (Math.random() * 4);
             int randomLayout = (int) (Math.random() * 3);
-            RelativeLayout layout = findViewById(R.id.main_layout);
+
             LinearLayout enemy = (LinearLayout) layout.getChildAt(12 + randomLine * 3 + randomLayout);
             CardView cardView = new CardView(this);
+            cardView.setOnClickListener(CardView.FRAGMENT_LISTENER);
             cardView.setBasicCard(enemyDeckList.get(0));
-
-
             if (enemy.getChildCount() > 0) {
-                setEnemyCard();
+                setEnemyCard(line);
                 return;
             }
             enemy.addView(cardView);
 
         } else {
+            Collections.shuffle(enemyCardsList);
             enemyDeckList.add(BasicCard.copy(enemyCardsList.get(0)));
-            int randomLayout = (int) (Math.random() * 3);
-            RelativeLayout layout = findViewById(R.id.main_layout);
+            int randomLayoutNumber = (int) (Math.random() * 3);
 
-
-            LinearLayout enemy = (LinearLayout) layout.getChildAt(12 + line * 3 + randomLayout);
+            LinearLayout enemy = (LinearLayout) layout.getChildAt(12 + line * 3 + randomLayoutNumber);
             CardView cardView = new CardView(this);
-            cardView.setBasicCard(enemyDeckList.get(0));
+            cardView.setBasicCard(enemyDeckList.remove(0));
+            cardView.setOnClickListener(CardView.FRAGMENT_LISTENER);
 
-            if (enemy.getChildCount() > 0) {
-                setEnemyCard();
+
+            int count = childCounter(line);
+            if (enemy.getChildCount() > 0 && count < 3) {
+                setEnemyCard(line);
                 return;
             }
+            if (count == 3) {
+                for (int i = 0; i < 4; i++) {
+                    if (childCounter(i) == 3) continue;
+                    enemy = (LinearLayout) layout.getChildAt(12 + i * 3 + randomLayoutNumber);
+                    if (enemy.getChildCount() > 0) {
+                        setEnemyCard(i);
+                        break;
+                    }
+                }
+            }
             enemy.addView(cardView);
-
-
 
         }
 
@@ -357,15 +302,27 @@ public class BattleFieldActivity extends AppCompatActivity {
 
         int size = fragmentList.size();
         if (size > 0) {
-
-            getSupportFragmentManager().beginTransaction().remove(fragmentList.get(size - 1))
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .remove(fragmentList.get(size - 1))
                     .commit();
-
         } else {
             finish();
         }
 
 
+    }
+
+    public int childCounter(int line) {
+        RelativeLayout layout = findViewById(R.id.main_layout);
+        int childCounter = 0;
+        for (int i = 0; i < 3; i++) {
+            LinearLayout enemyCheck = (LinearLayout) layout.getChildAt(12 + line * 3 + i);
+            if (enemyCheck.getChildCount() > 0) {
+                childCounter++;
+            }
+        }
+        return childCounter;
     }
 
 

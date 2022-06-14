@@ -179,8 +179,9 @@
 
     </com.example.sn1p3rsgame.MyLinearLayout>
 
-    <LinearLayout
+    <com.example.sn1p3rsgame.MyLinearLayout
         android:id="@+id/lo13"
+        line="10"
         android:layout_width="60dp"
         android:layout_height="40dp"
         android:layout_above="@id/lo16"
@@ -190,10 +191,11 @@
 
         android:orientation="horizontal">
 
-    </LinearLayout>
+    </com.example.sn1p3rsgame.MyLinearLayout>
 
-    <LinearLayout
+    <com.example.sn1p3rsgame.MyLinearLayout
         android:id="@+id/lo14"
+        line="10"
         android:layout_width="60dp"
         android:layout_height="40dp"
         android:layout_above="@+id/lo17"
@@ -204,10 +206,11 @@
 
         android:orientation="horizontal">
 
-    </LinearLayout>
+    </com.example.sn1p3rsgame.MyLinearLayout>
 
-    <LinearLayout
+    <com.example.sn1p3rsgame.MyLinearLayout
         android:id="@+id/lo15"
+        line="10"
         android:layout_width="60dp"
         android:layout_height="40dp"
         android:layout_above="@+id/lo18"
@@ -217,10 +220,11 @@
 
         android:orientation="horizontal">
 
-    </LinearLayout>
+    </com.example.sn1p3rsgame.MyLinearLayout>
 
-    <LinearLayout
+    <com.example.sn1p3rsgame.MyLinearLayout
         android:id="@+id/lo16"
+        line="11"
         android:layout_width="60dp"
         android:layout_height="40dp"
         android:layout_above="@+id/lo19"
@@ -231,10 +235,11 @@
 
         android:orientation="horizontal">
 
-    </LinearLayout>
+    </com.example.sn1p3rsgame.MyLinearLayout>
 
-    <LinearLayout
+    <com.example.sn1p3rsgame.MyLinearLayout
         android:id="@+id/lo17"
+        line="11"
         android:layout_width="60dp"
         android:layout_height="40dp"
         android:layout_above="@+id/lo20"
@@ -245,10 +250,11 @@
 
         android:orientation="horizontal">
 
-    </LinearLayout>
+    </com.example.sn1p3rsgame.MyLinearLayout>
 
-    <LinearLayout
+    <com.example.sn1p3rsgame.MyLinearLayout
         android:id="@+id/lo18"
+        line="11"
         android:layout_width="60dp"
         android:layout_height="40dp"
         android:layout_above="@+id/lo21"
@@ -258,10 +264,11 @@
 
         android:orientation="horizontal">
 
-    </LinearLayout>
+    </com.example.sn1p3rsgame.MyLinearLayout>
 
-    <LinearLayout
+    <com.example.sn1p3rsgame.MyLinearLayout
         android:id="@+id/lo19"
+        line="12"
         android:layout_width="60dp"
         android:layout_height="40dp"
         android:layout_above="@+id/lo22"
@@ -272,10 +279,11 @@
 
         android:orientation="horizontal">
 
-    </LinearLayout>
+    </com.example.sn1p3rsgame.MyLinearLayout>
 
-    <LinearLayout
+    <com.example.sn1p3rsgame.MyLinearLayout
         android:id="@+id/lo20"
+        line="12"
         android:layout_width="60dp"
         android:layout_height="40dp"
         android:layout_above="@+id/lo23"
@@ -286,10 +294,11 @@
 
         android:orientation="horizontal">
 
-    </LinearLayout>
+    </com.example.sn1p3rsgame.MyLinearLayout>
 
-    <LinearLayout
+    <com.example.sn1p3rsgame.MyLinearLayout
         android:id="@+id/lo21"
+        line="12"
         android:layout_width="60dp"
         android:layout_height="40dp"
         android:layout_above="@+id/lo24"
@@ -299,10 +308,11 @@
 
         android:orientation="horizontal">
 
-    </LinearLayout>
+    </com.example.sn1p3rsgame.MyLinearLayout>
 
-    <LinearLayout
+    <com.example.sn1p3rsgame.MyLinearLayout
         android:id="@+id/lo22"
+        line="13"
         android:layout_width="60dp"
         android:layout_height="40dp"
         android:layout_above="@id/recyclerView"
@@ -313,10 +323,11 @@
 
         android:orientation="horizontal">
 
-    </LinearLayout>
+    </com.example.sn1p3rsgame.MyLinearLayout>
 
-    <LinearLayout
+    <com.example.sn1p3rsgame.MyLinearLayout
         android:id="@+id/lo23"
+        line="13"
         android:layout_width="60dp"
         android:layout_height="40dp"
         android:layout_above="@+id/recyclerView"
@@ -327,10 +338,11 @@
 
         android:orientation="horizontal">
 
-    </LinearLayout>
+    </com.example.sn1p3rsgame.MyLinearLayout>
 
-    <LinearLayout
+    <com.example.sn1p3rsgame.MyLinearLayout
         android:id="@+id/lo24"
+        line="13"
         android:layout_width="60dp"
         android:layout_height="40dp"
         android:layout_above="@id/recyclerView"
@@ -341,7 +353,7 @@
 
         android:orientation="horizontal">
 
-    </LinearLayout>
+    </com.example.sn1p3rsgame.MyLinearLayout>
 
 
 

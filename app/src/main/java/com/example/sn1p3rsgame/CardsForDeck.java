@@ -18,6 +18,12 @@ public class CardsForDeck {
       static BasicCard hero3 = new BasicCard("Peasant", "light", 1, 3, "card");
       static BasicCard evil3 = new BasicCard("Sinner", "dark", 6, 3, "card");
       static BasicCard neutral3 = new BasicCard("Bird", "neutral", 4, 5, "card");
+      static BasicCard hero4 = new BasicCard("Knight", "light", 6, 5, "card");
+      static BasicCard evil4 = new BasicCard("Cerberus", "dark", 8, 3, "card");
+    static BasicCard neutral4 = new BasicCard("Tree", "neutral", 2, 12, "card");
+    static BasicCard hero5 = new BasicCard("King", "hero", 10, 4, "card");
+    static BasicCard evil5 = new BasicCard("Dark", "dark",0 , 20, "card");
+    static BasicCard neutral5 = new BasicCard("Phoenix", "neutral", 5, 5, "card");
 
 
     public  static  List<BasicCard> cardsForGame() {
@@ -31,6 +37,12 @@ public class CardsForDeck {
         cards.add(hero3);
         cards.add(evil3);
         cards.add(neutral3);
+        cards.add(hero4);
+        cards.add(evil4);
+        cards.add(neutral4);
+        cards.add(hero5);
+        cards.add(evil5);
+        cards.add(neutral5);
 
         Collections.sort(cards);
         return cards;

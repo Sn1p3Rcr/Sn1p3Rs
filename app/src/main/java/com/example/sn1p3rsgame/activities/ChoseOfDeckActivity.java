@@ -36,11 +36,32 @@ public class ChoseOfDeckActivity extends AppCompatActivity {
     public final static String TO_WIN_FRAGMENT = "win";
 
     protected CustomRecyclerViewAdapter allCardsAdapter, userCardsAdapter;
-    List<BasicCard> userCardsList, allCardsList  = new ArrayList<>();
+    List<BasicCard> userCardsList, allCardsList = new ArrayList<>();
     Button battleButton;
-    public static final int PLAYER_MAX_CARDS = 4;
+    public static final int PLAYER_MAX_CARDS = 8;
     CardsForDeck cardsForDeck = new CardsForDeck();
-
+    View.OnDragListener dragListener = new View.OnDragListener() {
+        @Override
+        public boolean onDrag(View v, DragEvent event) {
+            int dragEvent = event.getAction();
+            switch (dragEvent) {
+                case DragEvent.ACTION_DROP:
+                    CardView vw = (CardView) event.getLocalState();
+                    ViewGroup owner = (ViewGroup) vw.getParent();
+                    owner.removeView(vw);
+                    RecyclerView container = (RecyclerView) v;
+                    container.addView(vw);
+                    if (userCardsList.size() < PLAYER_MAX_CARDS) {
+                        userCardsList.add(vw.getBasicCard());
+                        allCardsList.remove(vw.getBasicCard());
+                        allCardsRv.getAdapter().notifyDataSetChanged();
+                        userCardsRv.getAdapter().notifyDataSetChanged();
+                    }
+                    break;
+            }
+            return true;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,72 +86,30 @@ public class ChoseOfDeckActivity extends AppCompatActivity {
 
         LinearLayoutManager linearLayoutManagerToDeck = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         userCardsRv.setLayoutManager(linearLayoutManagerToDeck);
-
-        View.OnDragListener dragListener = new View.OnDragListener() {
-            @Override
-            public boolean onDrag(View v, DragEvent event) {
-                int dragEvent = event.getAction();
-
-                switch (dragEvent) {
-
-                    case DragEvent.ACTION_DRAG_ENTERED:
-                        return true;
-
-                    case DragEvent.ACTION_DRAG_EXITED:
-                        break;
-
-                    case DragEvent.ACTION_DROP:
-                        CardView vw = (CardView) event.getLocalState();
-                        ViewGroup owner = (ViewGroup) vw.getParent();
-                        owner.removeView(vw);
-                        RecyclerView container = (RecyclerView) v;
-                        container.addView(vw);
-
-                        if (userCardsList.size() < PLAYER_MAX_CARDS) {
-                            userCardsList.add(vw.getBasicCard());
-                            allCardsList.remove(vw.getBasicCard());
-                            allCardsRv.getAdapter().notifyDataSetChanged();
-                            userCardsRv.getAdapter().notifyDataSetChanged();
-                        }
-
-                        return true;
-                }
-                return true;
-            }
-        };
-
         userCardsRv.setOnDragListener(dragListener);
-
         battleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (userCardsList.size() < PLAYER_MAX_CARDS) {
                     Toast.makeText(getApplicationContext(), "Выберите 8 карт", Toast.LENGTH_SHORT).show();
                 } else {
-
-
                     Fragment fragment = new GameLvlFragment();
-                    FragmentManager fm =getSupportFragmentManager();
+                    FragmentManager fm = getSupportFragmentManager();
                     FragmentTransaction ft = fm.beginTransaction();
-                    ft.add(R.id.fl_chose,fragment);
+                    ft.add(R.id.fl_chose, fragment);
                     ft.commit();
-
                 }
             }
         });
-
-
     }
 
 
     private List<BasicCard> getListDataFromDeck() {
-
         allCardsList = cardsForDeck.cardsForGame();
         return allCardsList;
     }
 
     private List<BasicCard> getListDataToDeck() {
-
         userCardsList = new ArrayList<BasicCard>();
         return userCardsList;
     }
@@ -138,13 +117,12 @@ public class ChoseOfDeckActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
-
         int size = fragmentList.size();
         if (size > 0) {
-
-            getSupportFragmentManager().beginTransaction().remove(fragmentList.get(size - 1))
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .remove(fragmentList.get(size - 1))
                     .commit();
-
         } else {
             finish();
         }
@@ -155,19 +133,15 @@ public class ChoseOfDeckActivity extends AppCompatActivity {
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Fragment fragment = null;
         if (requestCode == BattleFieldActivity.YOU_WIN && resultCode == RESULT_OK) {
-            Fragment fragment = new GameOverFragment();
-            FragmentManager fm = getSupportFragmentManager();
-            FragmentTransaction ft = fm.beginTransaction();
-            ft.add(R.id.fl_chose, fragment);
-            ft.commit();
+            fragment = new GameOverFragment();
         } else if (requestCode == BattleFieldActivity.YOU_WIN && resultCode == RESULT_CANCELED) {
-            Fragment fragment = new DefeatFragment();
-            FragmentManager fm = getSupportFragmentManager();
-            FragmentTransaction ft = fm.beginTransaction();
-            ft.add(R.id.fl_chose, fragment);
-            ft.commit();
+            fragment = new DefeatFragment();
         }
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fl_chose, fragment)
+                .commit();
     }
 
 

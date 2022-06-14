@@ -17,7 +17,6 @@ import com.example.sn1p3rsgame.recyclerStuff.CustomRecyclerViewAdapter;
 public class CardInformationFragment extends Fragment {
     TextView tv_name,tv_hp,tv_ap,tv_fraction;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
